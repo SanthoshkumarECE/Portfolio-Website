@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/devicon/2.16.0/devicon.min.css">
 <style>
   :root{
     --ink:#111110;
@@ -170,8 +171,6 @@
   /* ---------- row interaction ---------- */
   .row{transition:background-color .3s ease, padding-left .3s ease;}
   .row:hover{background-color:var(--paper-raised);padding-left:12px;padding-right:12px;margin-left:-12px;margin-right:-12px;}
-  .stack-cell{transition:background-color .3s ease;}
-  .stack-cell:hover{background-color:var(--paper-raised);}
 
   /* ---------- section shell ---------- */
   section{
@@ -226,16 +225,12 @@
     font-size:12px;color:var(--ink-faint);
     white-space:nowrap;
   }
-  .row ul{
-    margin-top:14px;padding-left:0;list-style:none;
-  }
-  .row li{
-    position:relative;padding-left:18px;
-    font-size:14.5px;color:var(--ink-soft);
-    margin-bottom:8px;
-  }
-  .row li::before{
-    content:'—';position:absolute;left:0;color:var(--ink-faint);
+  .row-desc{
+    margin-top:14px;
+    max-width:620px;
+    font-size:14.5px;
+    line-height:1.75;
+    color:var(--ink-soft);
   }
   .row-tags{
     margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;
@@ -249,32 +244,44 @@
   }
 
   /* ---------- stack / skills ---------- */
-  .stack-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:0;
-    border-top:1px solid var(--rule);
-    border-left:1px solid var(--rule);
-  }
-  .stack-cell{
-    border-right:1px solid var(--rule);
+  .skill-block{
+    padding:26px 0;
     border-bottom:1px solid var(--rule);
-    padding:24px;
   }
-  .stack-cell h3{
+  .skill-block:first-child{border-top:1px solid var(--rule);}
+  .skill-block-head{
     font-family:'JetBrains Mono',monospace;
     font-size:11.5px;
     color:var(--ink-faint);
     letter-spacing:0.06em;
     text-transform:uppercase;
-    margin-bottom:14px;
+    margin-bottom:16px;
   }
-  .stack-cell p{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:15px;
-    line-height:1.65;
+  .skill-chips{display:flex;flex-wrap:wrap;gap:9px;}
+  .skill-chip{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 12px;
+    border:1px solid var(--rule);
+    background:var(--paper-raised);
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;color:var(--ink);
+    transition:background-color .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .skill-chip i{
+    font-size:15px;line-height:1;
+    filter:grayscale(1) contrast(1.05);
     color:var(--ink);
   }
+  .skill-chip .chip-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--ink-faint);
+    flex-shrink:0;
+  }
+  .skill-chip:hover{
+    background:var(--ink);color:var(--paper);border-color:var(--ink);
+  }
+  .skill-chip:hover i{filter:grayscale(1) invert(1) contrast(1.4);}
+  .skill-chip:hover .chip-dot{background:var(--paper);}
 
   /* ---------- education / certs ---------- */
   .split{
@@ -358,7 +365,7 @@
 
 <header>
   <div class="wrap nav-inner">
-    <div class="nav-mark"><span class="dot"></span>SANTHOSH KUMAR</div>
+    <div class="nav-mark"><span class="dot"></span>SANTHOSH KUMAR MOORTHI</div>
     <nav>
       <ul>
         <li><a href="#work">Work</a></li>
@@ -377,7 +384,7 @@
   <section class="hero" style="border-bottom:none;">
     <div class="hero-eyebrow">SELECT role FROM engineer WHERE based_in = 'Chennai';<span class="cursor"></span></div>
     <h1>Backend engineer, <em>building on data you can trust.</em></h1>
-    <p class="hero-sub">Santhosh Kumar M — a backend engineer building enterprise applications with Java, Spring Boot, and Oracle SQL. Focused on RESTful API design, JWT-based authentication, and scalable, database-driven systems, with a working foundation in microservices architecture.</p>
+    <p class="hero-sub">Santhosh Kumar M — a backend engineer building enterprise applications and RESTful services with Java, Spring Boot, Spring Data JPA, and Oracle SQL. Focused on backend integrations, business validations, data mapping, and testing, with working exposure to microservices, Apache Kafka, and applied GenAI tooling.</p>
     <div class="hero-meta">
       <span>Chennai, India</span>
       <a href="mailto:santhosh16022003@gmail.com">santhosh16022003@gmail.com</a>
@@ -388,8 +395,8 @@
 
     <div class="stats">
       <div class="stat">
-        <div class="stat-num"><span class="counter" data-target="1" data-suffix="+ yr">0</span></div>
-        <div class="stat-label">Professional experience</div>
+        <div class="stat-num"><span class="counter" data-target="1.5" data-suffix="+ yr">0</span></div>
+        <div class="stat-label">Combined experience</div>
       </div>
       <div class="stat">
         <div class="stat-num"><span class="counter" data-target="3" data-suffix="">0</span></div>
@@ -412,14 +419,9 @@
             <div class="row-title">Project Engineer <span class="row-org">— Wipro Ltd</span></div>
             <div class="row-date">Jun 2025 — Jul 2026</div>
           </div>
-          <ul>
-            <li>Built backend integration modules with Java, Spring Boot, and Oracle SQL for a financial budgeting and billing platform.</li>
-            <li>Integrated third-party departmental applications with a centralized approval platform via REST APIs and JWT-based server-to-server authentication.</li>
-            <li>Implemented business validations, data mapping, and SQL operations for financial transactions and multi-level approval workflows.</li>
-            <li>Troubleshot integration issues and supported WAR deployments across enterprise environments on Oracle WebLogic Server.</li>
-          </ul>
+          <p class="row-desc">I work on the backend of a financial budgeting and billing platform — connecting departmental systems through REST APIs, mapping data across different payload formats, and keeping Oracle SQL transactions consistent through Spring Data JPA. A good part of the job is support: tracing failed payments back through logs and database records, writing tests in JUnit and Mockito, and validating integrations in Postman before they ship.</p>
           <div class="row-tags">
-            <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Oracle SQL</span><span class="tag">REST APIs</span><span class="tag">JWT</span><span class="tag">WebLogic</span>
+            <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Spring Data JPA</span><span class="tag">Oracle SQL</span><span class="tag">JUnit</span><span class="tag">Postman</span>
           </div>
         </div>
       </div>
@@ -428,14 +430,9 @@
         <div>
           <div class="row-top">
             <div class="row-title">Software Engineer Intern <span class="row-org">— Sciflare Technologies</span></div>
-            <div class="row-date">Nov 2024 — Feb 2025</div>
+            <div class="row-date">Nov 2024 — Apr 2025</div>
           </div>
-          <ul>
-            <li>Built backend features in Node.js, Express.js, MongoDB, and Docker for a growing platform.</li>
-            <li>Implemented RESTful and GraphQL APIs connecting frontend and backend components.</li>
-            <li>Deployed services within a microservices architecture on AWS EC2, using Jenkins-based CI/CD pipelines.</li>
-            <li>Integrated identity verification and payment gateway modules into backend workflows.</li>
-          </ul>
+          <p class="row-desc">I built backend features for a Node.js and Express platform inside a microservices setup — payment integrations, an admin panel for manual checkout, identity verification through Cashfree, and the logic behind prize distribution. Everything was containerized with Docker and shipped through Jenkins onto AWS.</p>
           <div class="row-tags">
             <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MongoDB</span><span class="tag">Docker</span><span class="tag">GraphQL</span><span class="tag">AWS EC2</span>
           </div>
@@ -457,10 +454,7 @@
           <div class="row-top">
             <div class="row-title">Stock Price Prediction System</div>
           </div>
-          <ul>
-            <li>Built an LSTM time-series model to forecast stock prices on the Google stock price dataset from Kaggle.</li>
-            <li>Preprocessed data with scaling and sequence generation; evaluated with MAE 6.9, MSE 81.8, RMSE 9.0, and plotted real vs. predicted trends.</li>
-          </ul>
+          <p class="row-desc">A side project forecasting stock prices with an LSTM model, trained on Google's historical stock data from Kaggle — scaling, sequence generation, and plotting predicted trends against the real thing to see how close the model could get.</p>
           <div class="row-tags">
             <span class="tag">Python</span><span class="tag">LSTM</span><span class="tag">Time series</span>
           </div>
@@ -472,12 +466,7 @@
           <div class="row-top">
             <div class="row-title">Sanflix — Movie Ticket Booking System</div>
           </div>
-          <ul>
-            <li>Built backend services in Node.js and Express.js for listings, availability checks, and ticket booking.</li>
-            <li>Implemented role-based auth for admins and users with JWT, securing protected API routes.</li>
-            <li>Designed MongoDB schemas for users, movies, and bookings.</li>
-            <li>Built a responsive UI wired to the backend for a seamless booking flow.</li>
-          </ul>
+          <p class="row-desc">A movie ticket booking platform built end to end — Node.js and Express on the backend, JWT-based role auth for admins and users, MongoDB schemas for movies and bookings, and a responsive UI wired through to keep the booking flow simple.</p>
           <div class="row-tags">
             <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MongoDB</span><span class="tag">JWT</span>
           </div>
@@ -492,22 +481,61 @@
       <h2>Stack</h2>
       <span class="rule"></span>
     </div>
-    <div class="stack-grid">
-      <div class="stack-cell">
-        <h3>Backend</h3>
-        <p>Java, Spring Boot, Spring MVC, Hibernate, Spring Data JPA, REST APIs, JWT, Node.js, Express.js</p>
+    <div class="skill-blocks">
+      <div class="skill-block">
+        <div class="skill-block-head">Backend</div>
+        <div class="skill-chips">
+          <span class="skill-chip"><i class="devicon-java-plain"></i>Java</span>
+          <span class="skill-chip"><i class="devicon-spring-plain"></i>Spring Boot</span>
+          <span class="skill-chip"><i class="devicon-spring-plain"></i>Spring MVC</span>
+          <span class="skill-chip"><i class="devicon-spring-plain"></i>Spring Data JPA</span>
+          <span class="skill-chip"><i class="devicon-hibernate-plain"></i>JPA / Hibernate</span>
+          <span class="skill-chip"><span class="chip-dot"></span>REST APIs</span>
+          <span class="skill-chip"><i class="devicon-nodejs-plain"></i>Node.js</span>
+          <span class="skill-chip"><i class="devicon-express-original"></i>Express.js</span>
+          <span class="skill-chip"><i class="devicon-python-plain"></i>Python</span>
+        </div>
       </div>
-      <div class="stack-cell">
-        <h3>Databases &amp; testing</h3>
-        <p>Oracle SQL, MySQL, MongoDB, JUnit, Mockito, Postman</p>
+      <div class="skill-block">
+        <div class="skill-block-head">AI / GenAI</div>
+        <div class="skill-chips">
+          <span class="skill-chip"><i class="devicon-spring-plain"></i>Spring AI</span>
+          <span class="skill-chip"><span class="chip-dot"></span>LLM Integration</span>
+        </div>
       </div>
-      <div class="stack-cell">
-        <h3>Tools &amp; DevOps</h3>
-        <p>Git, Maven, Docker, Jenkins, WebLogic, AWS, CI/CD</p>
+      <div class="skill-block">
+        <div class="skill-block-head">Databases &amp; testing</div>
+        <div class="skill-chips">
+          <span class="skill-chip"><i class="devicon-oracle-original"></i>Oracle SQL</span>
+          <span class="skill-chip"><i class="devicon-mysql-plain"></i>MySQL</span>
+          <span class="skill-chip"><i class="devicon-mongodb-plain"></i>MongoDB</span>
+          <span class="skill-chip"><span class="chip-dot"></span>JUnit</span>
+          <span class="skill-chip"><span class="chip-dot"></span>Mockito</span>
+          <span class="skill-chip"><i class="devicon-postman-plain"></i>Postman</span>
+        </div>
       </div>
-      <div class="stack-cell">
-        <h3>Concepts</h3>
-        <p>OOP, DSA, Microservices</p>
+      <div class="skill-block">
+        <div class="skill-block-head">Tools &amp; DevOps</div>
+        <div class="skill-chips">
+          <span class="skill-chip"><i class="devicon-git-plain"></i>Git</span>
+          <span class="skill-chip"><i class="devicon-maven-plain"></i>Maven</span>
+          <span class="skill-chip"><i class="devicon-docker-plain"></i>Docker</span>
+          <span class="skill-chip"><i class="devicon-jenkins-line"></i>Jenkins</span>
+          <span class="skill-chip"><i class="devicon-amazonwebservices-original"></i>AWS</span>
+          <span class="skill-chip"><span class="chip-dot"></span>CI/CD</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-head">Concepts</div>
+        <div class="skill-chips">
+          <span class="skill-chip"><span class="chip-dot"></span>OOP</span>
+          <span class="skill-chip"><span class="chip-dot"></span>DSA</span>
+          <span class="skill-chip"><span class="chip-dot"></span>Multithreading</span>
+          <span class="skill-chip"><span class="chip-dot"></span>Microservices</span>
+          <span class="skill-chip"><span class="chip-dot"></span>Distributed Systems</span>
+          <span class="skill-chip"><i class="devicon-apachekafka-original"></i>Apache Kafka</span>
+          <span class="skill-chip"><i class="devicon-kubernetes-plain"></i>Kubernetes</span>
+        </div>
       </div>
     </div>
   </section>
@@ -542,10 +570,10 @@
       <div>
         <h3>Certifications</h3>
         <ul class="cert-list">
-          <li><span>Oracle Certified Professional — Java SE 21 Developer</span><span class="cert-tick">2025</span></li>
-          <li><span>Oracle Database SQL Associate (1Z0-071)</span><span class="cert-tick">2025</span></li>
-          <li><span>AWS Certified Cloud Practitioner</span><span class="cert-tick">2025</span></li>
-        </ul>
+  <li><a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=A18A6C06A4B040DA7CEC040263236B82E62E9F0FEDF0321EAD02C5B65E066DFE" target="_blank">Oracle Certified Professional — Java SE 21 Developer</a><span class="cert-tick">2025</span></li>
+  <li><a href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=94D102633D6DC65A8B8C016E46B7BA2FD21583BE99CA872DC19CB6A23EF1C6D1" target="_blank">Oracle Database SQL Associate (1Z0-071)</a><span class="cert-tick">2025</span></li>
+  <li><a href="https://www.credly.com/badges/1c6eea2a-ae87-47c6-be4b-bc5b1cfba725/linked_in_profile" target="_blank">AWS Certified Cloud Practitioner</a><span class="cert-tick">2025</span></li>
+</ul>
       </div>
     </div>
   </section>
@@ -577,7 +605,7 @@
 
   /* ---- 1. scroll reveal for repeating components ---- */
   var revealTargets = document.querySelectorAll(
-    '.row, .stack-cell, .split > div, .contact-links a, .section-head'
+    '.row, .skill-block, .split > div, .contact-links a, .section-head'
   );
   revealTargets.forEach(function(el, i){
     el.classList.add('reveal');
@@ -620,15 +648,16 @@
   function animateCounter(el){
     var target = parseFloat(el.getAttribute('data-target'));
     var suffix = el.getAttribute('data-suffix') || '';
-    if (reduceMotion) { el.textContent = target + suffix; return; }
+    var decimals = (target % 1 !== 0) ? 1 : 0;
+    if (reduceMotion) { el.textContent = target.toFixed(decimals) + suffix; return; }
     var start = null;
     var duration = 900;
     function step(ts){
       if (!start) start = ts;
       var progress = Math.min((ts - start) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      var value = Math.round(target * eased);
-      el.textContent = value + suffix;
+      var value = target * eased;
+      el.textContent = value.toFixed(decimals) + suffix;
       if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
